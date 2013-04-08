@@ -1,7 +1,7 @@
 # OpenCalais
 
 Ruby gem to access the [OpenCalais API](http://www.opencalais.com/documentation/calais-web-service-api/api-invocation/rest), using the new-ish REST API, and JSON responses.
-It uses [Faraday](https://github.com/lostisland/faraday) to abstract HTTP library (defaults to use excon because ot is excellent), and multi_json to abstract JSON parsing.
+It uses [Faraday](https://github.com/lostisland/faraday) to abstract HTTP library (defaults to use excon because it is excellent), and multi_json to abstract JSON parsing.
 
 It returns a parsed version of the response, but the response also contains the raw response (converted from json to hashes/arrays/string/etc).
 
