@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module OpenCalais
   class Response
     attr_accessor :raw, :language, :topics, :tags, :entities, :relations, :locations

@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 require 'faraday_middleware'
 
 module OpenCalais
@@ -11,7 +13,7 @@ module OpenCalais
       :ssl
     ].freeze
 
-    def add_default_options(opts={})
+    def merge_default_options(opts={})
       headers = opts.delete(:headers) || {}
       options = {
         :headers => {
@@ -32,13 +34,14 @@ module OpenCalais
         :url => endpoint
       }.merge(opts)
       options[:headers] = options[:headers].merge(headers)
+      OpenCalais::HEADERS.each{|k,v| options[:headers][v] = options.delete(k) if options.key?(k)}      
       options
     end
 
     def connection(options={})
-      opts = add_default_options(options)
+      opts = merge_default_options(options)
       Faraday::Connection.new(opts) do |connection|
-        connection.request :url_encoded
+        connection.request  :url_encoded
         connection.response :mashify
         connection.response :logger if ENV['DEBUG']
 
@@ -49,7 +52,6 @@ module OpenCalais
         end
 
         connection.adapter(adapter)
-
       end
 
     end

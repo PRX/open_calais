@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 require 'open_calais/configuration'
 require 'open_calais/connection'
 require 'open_calais/response'
@@ -35,12 +37,10 @@ module OpenCalais
 
     def enrich(text, opts={})
       raise 'Specify a value for the text' unless (text && text.length > 0)
+      options = current_options.merge(opts)
 
-      response = connection.post do |request|
+      response = connection(options).post do |request|
         request.body = text
-        OpenCalais::HEADERS.each do |k,v|
-          request.headers[v] = opts[k] if opts.key?(k)
-        end
       end
       OpenCalais::Response.new(response)
     end
