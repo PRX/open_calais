@@ -18,7 +18,7 @@ module OpenCalais
     end
 
     def humanize_topic(topic)
-      topic.gsub('_', ' and ')
+      topic.gsub('_', ' & ').titleize.remove_formatting
     end
 
     def importance_to_score(imp)
@@ -37,11 +37,11 @@ module OpenCalais
       r.each do |k,v|
         case v._typeGroup
         when 'topics'
-          self.topics << {:name => humanize_topic(v.categoryName), :score => v.score, :original => v.categoryName}
+          self.topics << {:name => humanize_topic(v.categoryName), :score => v.score.to_f, :original => v.categoryName}
         when 'socialTag'
-          self.tags << {:name => v.name, :score => importance_to_score(v.importance)}
+          self.tags << {:name => v.name.gsub('_', ' and ').downcase, :score => importance_to_score(v.importance)}
         when 'entities'
-          item = {:guid => k, :name => v.name, :type => v._type}
+          item = {:guid => k, :name => v.name, :type => v._type.remove_formatting.titleize, :score => 1.0}
 
           instances = Array(v.instances).select{|i| i.exact.downcase != item[:name].downcase }
           item[:matches] = instances if instances && instances.size > 0
@@ -49,7 +49,7 @@ module OpenCalais
           if OpenCalais::GEO_TYPES.include?(v._type)
             if (v.resolutions && v.resolutions.size > 0)
               r = v.resolutions.first
-              item[:name]      = r.shortname
+              item[:name]      = r.shortname || r.name
               item[:latitude]  = r.latitude
               item[:longitude] = r.longitude
               item[:country]   = r.containedbycountry if r.containedbycountry
@@ -60,13 +60,15 @@ module OpenCalais
             self.entities << item
           end
         when 'relations'
-          item = v.reject_if{|k,v| k[0] == '_' || k == 'instances'}
-          item[:type] = v._type
+          item = v.reject{|k,v| k[0] == '_' || k == 'instances'} || {}
+          item[:type] = v._type.remove_formatting.titleize
           self.relations << item
         end
       end
 
-      #  remove social tags which are in the topics list already
+      # remove social tags which are in the topics list already
+      topic_names = self.topics.collect{|topic| topic[:name].downcase}
+      self.tags.delete_if{|tag| topic_names.include?(tag[:name]) }
     end
   end
 end

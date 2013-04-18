@@ -28,14 +28,15 @@ module OpenCalais
     end
 
     def setup(options={})
-      options = OpenCalais.options.merge(options)
-      self.current_options = options
+      opts = Hash[options.map{ |k, v| [k.to_sym, v] }]
+      opts = OpenCalais.options.merge(opts)
+      self.current_options = opts
       Configuration.keys.each do |key|
-        send("#{key}=", options[key])
+        send("#{key}=", opts[key])
       end
     end
 
-    def enrich(text, opts={})
+    def analyze(text, opts={})
       raise 'Specify a value for the text' unless (text && text.length > 0)
       options = current_options.merge(opts)
 
@@ -44,6 +45,11 @@ module OpenCalais
       end
       OpenCalais::Response.new(response)
     end
+
+    # using analyze as a standard method name
+    # enrich is more OpenCalais specific
+    alias_method :enrich, :analyze
+
   end
 
 end

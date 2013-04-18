@@ -5,6 +5,8 @@ require 'open_calais/version'
 require 'open_calais/configuration'
 require 'open_calais/client'
 
+require 'active_support/all'
+
 module OpenCalais
   extend Configuration
 

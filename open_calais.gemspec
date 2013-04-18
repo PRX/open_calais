@@ -24,6 +24,8 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency('multi_xml')
   gem.add_runtime_dependency('excon')
   gem.add_runtime_dependency('hashie',  '>= 0.4.0')
+  gem.add_runtime_dependency('activesupport')
+  gem.add_runtime_dependency('stringex')
 
   gem.add_development_dependency('rake')
   gem.add_development_dependency('minitest')
