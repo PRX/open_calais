@@ -23,4 +23,18 @@ describe OpenCalais::Client do
     response.raw.wont_be_nil
   end
 
+  it "passes in header options in client" do
+    oc = OpenCalais::Client.new(:api_key => ENV['OPEN_CALAIS_KEY'], :content_type => OpenCalais::CONTENT_TYPES[:html])
+    response = oc.enrich("Ruby on Rails is a fantastic web framework. It uses MVC, and the ruby programming language invented by Matz")
+    response.wont_be_nil
+    response.raw.wont_be_nil
+  end
+
+  it "passes in header optionsin enrich" do
+    oc = OpenCalais::Client.new(:api_key => ENV['OPEN_CALAIS_KEY'])
+    response = oc.enrich("Ruby on Rails is a fantastic web framework. It uses MVC, and the ruby programming language invented by Matz", :headers => {:content_type => OpenCalais::CONTENT_TYPES[:html]})
+    response.wont_be_nil
+    response.raw.wont_be_nil
+  end
+
 end
