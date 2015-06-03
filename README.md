@@ -1,6 +1,18 @@
 # OpenCalais
 
-Ruby gem to access the [OpenCalais API](http://www.opencalais.com/documentation/calais-web-service-api/api-invocation/rest), using the new-ish REST API, and JSON responses.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/PRX/open_calais.svg?branch=master)](https://travis-ci.org/PRX/open_calais)
+[![Code Climate](https://codeclimate.com/github/PRX/open_calais/badges/gpa.svg)](https://codeclimate.com/github/PRX/open_calais)
+[![Coverage Status](https://coveralls.io/repos/PRX/open_calais/badge.svg?branch=master)](https://coveralls.io/r/PRX/open_calais?branch=master)
+[![Dependency Status](https://gemnasium.com/PRX/open_calais.svg)](https://gemnasium.com/PRX/open_calais)
+
+## Gem Version 1.* supports the original OpenCalais API
+## Gem Version 2.* now uses the upgraded API http://new.opencalais.com/upgrade/
+
+If you are upgrading the the new version of the API, you will need a new API key. You should also review the [upgrade guide](http://new.opencalais.com/upgrade/).
+
+This is a ruby gem to access the [OpenCalais API](http://www.opencalais.com/documentation/calais-web-service-api/api-invocation/rest), using the REST API, and JSON responses.
+
 It uses [Faraday](https://github.com/lostisland/faraday) to abstract HTTP library (defaults to use excon because it is excellent), and multi_json to abstract JSON parsing.
 
 It returns a parsed version of the response, but the response also contains the raw response (converted from json to hashes/arrays/string/etc).
