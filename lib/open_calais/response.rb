@@ -38,7 +38,7 @@ module OpenCalais
       r.each do |k,v|
         case v._typeGroup
         when 'topics'
-          self.topics << {:name => humanize_topic(v.categoryName), :score => v.score.to_f, :original => v.categoryName}
+          self.topics << {:name => humanize_topic(v.name), :score => v.score.to_f, :original => v.name}
         when 'socialTag'
           self.tags << {:name => v.name.gsub('_', ' and ').downcase, :score => importance_to_score(v.importance)}
         when 'entities'
