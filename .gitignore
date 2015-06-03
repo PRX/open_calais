@@ -3,6 +3,7 @@
 .bundle
 .config
 .key
+.ruby-version
 .rbenv-version
 .yardoc
 Gemfile.lock
