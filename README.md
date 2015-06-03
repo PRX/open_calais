@@ -6,8 +6,8 @@
 [![Coverage Status](https://coveralls.io/repos/PRX/open_calais/badge.svg?branch=master)](https://coveralls.io/r/PRX/open_calais?branch=master)
 [![Dependency Status](https://gemnasium.com/PRX/open_calais.svg)](https://gemnasium.com/PRX/open_calais)
 
-## Gem Version 1.* supports the original OpenCalais API
-## Gem Version 2.* now uses the upgraded API http://new.opencalais.com/upgrade/
+### Gem Version 0.1.* supports the original OpenCalais API
+### Gem Version 0.2.* now uses the upgraded API http://new.opencalais.com/upgrade/
 
 If you are upgrading the the new version of the API, you will need a new API key. You should also review the [upgrade guide](http://new.opencalais.com/upgrade/).
 
