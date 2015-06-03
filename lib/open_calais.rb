@@ -11,7 +11,7 @@ module OpenCalais
   extend Configuration
 
   HEADERS = {
-    :license_id                    => 'x-calais-licenseID',
+    :license_id                    => 'X-AG-Access-Token',
     :content_type                  => 'Content-Type',
     :output_format                 => 'outputFormat',
     :reltag_base_url               => 'reltagBaseURL',
@@ -30,14 +30,14 @@ module OpenCalais
     :xml     => 'TEXT/XML',
     :html    => 'TEXT/HTML',
     :htmlraw => 'TEXT/HTMLRAW',
-    :raw     => 'TEXT/RAW'
+    :raw     => 'text/raw'
   }
 
   OUTPUT_FORMATS = {
     :rdf          => 'XML/RDF',
     :simple       => 'Text/Simple',
     :microformats => 'Text/Microformats',
-    :json         => 'Application/JSON'
+    :json         => 'application/json'
   }
 
   METADATA_SOCIAL_TAGS = 'SocialTags'

@@ -34,7 +34,7 @@ module OpenCalais
         :url => endpoint
       }.merge(opts)
       options[:headers] = options[:headers].merge(headers)
-      OpenCalais::HEADERS.each{|k,v| options[:headers][v] = options.delete(k) if options.key?(k)}      
+      OpenCalais::HEADERS.each{|k,v| options[:headers][v] = options.delete(k) if options.key?(k)}
       options
     end
 
