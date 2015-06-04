@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{This is a gem to call the OpenCalais improved REST API.}
   gem.description   = %q{This is a gem to call the OpenCalais improved REST API. http://www.opencalais.com/ http://www.opencalais.com/documentation/calais-web-service-api/api-invocation/rest}
   gem.homepage      = "https://github.com/PRX/open_calais"
-
+  gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
