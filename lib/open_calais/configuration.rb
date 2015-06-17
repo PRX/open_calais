@@ -53,6 +53,5 @@ module OpenCalais
       self.user_agent         = DEFAULT_USER_AGENT
       self
     end
-
   end
 end
