@@ -14,30 +14,20 @@ module OpenCalais
     :license_id                    => 'X-AG-Access-Token',
     :content_type                  => 'Content-Type',
     :output_format                 => 'outputFormat',
-    :reltag_base_url               => 'reltagBaseURL',
-    :calculate_relevance_score     => 'calculateRelevanceScore',
-    :enable_metadata_type          => 'enableMetadataType',
-    :doc_rdf_accessible            => 'docRDFaccessible',
-    :discard_metadata              => 'discardMetadata',
-    :omit_outputting_original_text => 'omitOutputtingOriginalText',
-    :allow_distribution            => 'allowDistribution',
-    :allow_search                  => 'allowSearch',
-    :external_id                   => 'externalID',
-    :submitter                     => 'submitter'
+    :language                      => 'x-calais-language'
   }
 
   CONTENT_TYPES = {
-    :xml     => 'TEXT/XML',
-    :html    => 'TEXT/HTML',
-    :htmlraw => 'TEXT/HTMLRAW',
+    :xml     => 'text/xml',
+    :html    => 'text/html',
+    :htmlraw => 'text/htmlraw',
     :raw     => 'text/raw'
   }
 
   OUTPUT_FORMATS = {
-    :rdf          => 'XML/RDF',
-    :simple       => 'Text/Simple',
-    :microformats => 'Text/Microformats',
-    :json         => 'application/json'
+    :rdf  => 'xml/rdf',
+    :n3   => 'text/n3',
+    :json => 'application/json'
   }
 
   METADATA_SOCIAL_TAGS = 'SocialTags'
@@ -49,5 +39,4 @@ module OpenCalais
   GEO_TYPES       = %w(City Continent Country NaturalFeature ProvinceOrState Region)
 
   DISAMBUGUATIONS = %w(er/Company er/Geo er/Product)
-
 end
