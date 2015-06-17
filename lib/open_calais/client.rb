@@ -38,7 +38,7 @@ module OpenCalais
 
     def analyze(text, opts={})
       raise 'Specify a value for the text' unless (text && text.length > 0)
-      options = {params: current_options}.merge(opts)
+      options = current_options.merge(opts)
 
       response = connection(options).post do |request|
         request.body = text
@@ -49,7 +49,5 @@ module OpenCalais
     # using analyze as a standard method name
     # enrich is more OpenCalais specific
     alias_method :enrich, :analyze
-
   end
-
 end
