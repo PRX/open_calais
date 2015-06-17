@@ -21,5 +21,4 @@ describe OpenCalais do
 
     OpenCalais.options[:api_key].must_equal "this is a test key"
   end
-
 end

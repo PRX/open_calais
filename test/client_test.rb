@@ -36,5 +36,4 @@ describe OpenCalais::Client do
     response.wont_be_nil
     response.raw.wont_be_nil
   end
-
 end
