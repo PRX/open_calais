@@ -22,20 +22,17 @@ module OpenCalais
           'Accept'       => "#{OpenCalais::OUTPUT_FORMATS[:json]};charset=utf-8",
 
           # open calais default headers
-          OpenCalais::HEADERS[:license_id]                    => api_key,
-          OpenCalais::HEADERS[:content_type]                  => OpenCalais::CONTENT_TYPES[:raw],
-          OpenCalais::HEADERS[:output_format]                 => OpenCalais::OUTPUT_FORMATS[:json],
-          OpenCalais::HEADERS[:calculate_relevance_score]     => 'false',
-          OpenCalais::HEADERS[:enable_metadata_type]          => 'SocialTags',
-          OpenCalais::HEADERS[:doc_rdf_accessible]            => 'false',
-          OpenCalais::HEADERS[:omit_outputting_original_text] => 'TRUE' # case matters here, actually
+          OpenCalais::HEADERS[:license_id]    => api_key,
+          OpenCalais::HEADERS[:content_type]  => OpenCalais::CONTENT_TYPES[:raw],
+          OpenCalais::HEADERS[:output_format] => OpenCalais::OUTPUT_FORMATS[:json],
+          OpenCalais::HEADERS[:language]      => 'English'
         },
         :ssl => {:verify => false},
         :url => endpoint
       }.merge(opts)
       options[:headers] = options[:headers].merge(headers)
       OpenCalais::HEADERS.each{|k,v| options[:headers][v] = options.delete(k) if options.key?(k)}
-      options
+      options.select{|k,v| ALLOWED_OPTIONS.include?(k.to_sym)}
     end
 
     def connection(options={})
