@@ -1,8 +1,11 @@
 # -*- encoding: utf-8 -*-
-require 'stringex'
+
+require 'active_support'
 
 module OpenCalais
   class Response
+
+    include ActiveSupport::Inflector
     attr_accessor :raw, :language, :topics, :tags, :entities, :relations, :locations
 
     def initialize(response)
@@ -19,7 +22,7 @@ module OpenCalais
     end
 
     def humanize_topic(topic)
-      topic.gsub('_', ' & ').titleize.remove_formatting
+      transliterate(topic.gsub('_', ' & ').titleize)
     end
 
     def importance_to_score(imp)
@@ -42,7 +45,7 @@ module OpenCalais
         when 'socialTag'
           self.tags << {:name => v.name.gsub('_', ' and ').downcase, :score => importance_to_score(v.importance)}
         when 'entities'
-          item = {:guid => k, :name => v.name, :type => v._type.remove_formatting.titleize, :score => 1.0}
+          item = {:guid => k, :name => v.name, :type => transliterate(v._type).titleize, :score => 1.0}
 
           instances = Array(v.instances).select{|i| i.exact.downcase != item[:name].downcase }
           item[:matches] = instances if instances && instances.size > 0
@@ -62,7 +65,7 @@ module OpenCalais
           end
         when 'relations'
           item = v.reject{|k,v| k[0] == '_' || k == 'instances'} || {}
-          item[:type] = v._type.remove_formatting.titleize
+          item[:type] = transliterate(v._type).titleize
           self.relations << item
         end
       end
