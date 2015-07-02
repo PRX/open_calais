@@ -26,7 +26,7 @@ module OpenCalais
     end
 
     def importance_to_score(imp)
-      case imp
+      case imp.to_i
       when 1 then 0.9
       when 2 then 0.7
       else 0.5
