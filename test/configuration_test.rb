@@ -11,5 +11,4 @@ describe OpenCalais::Configuration do
       c.must_be_kind_of OpenCalais::Configuration
     end
   end
-
 end
