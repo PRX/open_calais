@@ -45,7 +45,7 @@ module OpenCalais
         when 'socialTag'
           self.tags << {:name => v.name.gsub('_', ' and ').downcase, :score => importance_to_score(v.importance)}
         when 'entities'
-          item = {:guid => k, :name => v.name, :type => transliterate(v._type).titleize, :score => 1.0}
+          item = {:guid => k, :name => v.name, :type => transliterate(v._type).titleize, :score => v.relevance}
 
           instances = Array(v.instances).select{|i| i.exact.downcase != item[:name].downcase }
           item[:matches] = instances if instances && instances.size > 0
