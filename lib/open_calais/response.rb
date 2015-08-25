@@ -47,8 +47,12 @@ module OpenCalais
         when 'entities'
           item = {:guid => k, :name => v.name, :type => transliterate(v._type).titleize, :score => v.relevance}
 
-          instances = Array(v.instances).select{|i| i.exact.downcase != item[:name].downcase }
-          item[:matches] = instances if instances && instances.size > 0
+          instances = unless exact
+            Array(v.instances)
+          else
+            Array(v.instances).select{|i| i.exact.downcase != item[:name].downcase }
+          end
+          item[:matches] = instances unless instances.empty?
 
           if OpenCalais::GEO_TYPES.include?(v._type)
             if (v.resolutions && v.resolutions.size > 0)
