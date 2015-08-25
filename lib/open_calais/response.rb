@@ -60,7 +60,7 @@ module OpenCalais
         when 'entities'
           item = {:guid => k, :name => v.name, :type => transliterate(v._type).titleize, :score => v.relevance}
 
-          instances = unless exact
+          instances = unless options[:exact]
             Array(v.instances)
           else
             Array(v.instances).select{|i| i.exact.downcase != item[:name].downcase }
