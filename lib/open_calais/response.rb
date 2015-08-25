@@ -4,11 +4,16 @@ require 'active_support'
 
 module OpenCalais
   class Response
+    
+    ALLOWED_OPTIONS = [
+      :exact
+    ].freeze
 
     include ActiveSupport::Inflector
     attr_accessor :raw, :language, :topics, :tags, :entities, :relations, :locations
 
-    def initialize(response)
+    def initialize(response, options={})
+      @options = merge_default_options(options)
       @raw  = response
 
       @language = 'English'
@@ -18,7 +23,15 @@ module OpenCalais
       @relations = []
       @locations = []
 
-      parse(response)
+      parse(response, @options)
+    end
+    
+    def merge_default_options(opts={})
+      defaults = {
+        exact: true
+      }
+      options = defaults.merge(opts)
+      options.select{ |k,v| ALLOWED_OPTIONS.include? k.to_sym }
     end
 
     def humanize_topic(topic)
@@ -33,7 +46,7 @@ module OpenCalais
       end
     end
 
-    def parse(response)
+    def parse(response, options={})
       r = response.body
       @language = r.doc.meta.language rescue nil
       @language = nil if @language == 'InputTextTooShort'
