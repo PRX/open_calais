@@ -1,6 +1,8 @@
 sudo: false
 language: ruby
 cache: bundler
+env:
+  - TRAVIS=true
 rvm:
   - 2.0.0-p647
   - 2.1.7
