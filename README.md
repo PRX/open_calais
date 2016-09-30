@@ -8,11 +8,11 @@
 
 _Gem Version 0.1.* supports the original OpenCalais API_
 
-_Gem Version 0.2.* now uses the upgraded API http://new.opencalais.com/upgrade/_
+_Gem Version 0.2.* now uses the upgraded API http://www.opencalais.com/_
 
-If you are upgrading the the new version of the API, you will need a new API key. You should also review the [upgrade guide](http://new.opencalais.com/upgrade/).
+If you are upgrading the the new version of the API, you will need a new API key. You should also review the [upgrade guide](http://www.opencalais.com/opencalais-api/).
 
-This is a ruby gem to access the [OpenCalais API](http://www.opencalais.com/documentation/calais-web-service-api/api-invocation/rest), using the REST API, and JSON responses.
+This is a ruby gem to access the [OpenCalais API](http://www.opencalais.com/opencalais-api/), using the REST API, and JSON responses.
 
 It uses [Faraday](https://github.com/lostisland/faraday) to abstract HTTP library (defaults to use excon because it is excellent), and multi_json to abstract JSON parsing.
 
