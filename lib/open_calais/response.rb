@@ -64,7 +64,7 @@ module OpenCalais
             self.entities << item
           end
         when 'relations'
-          item = v.reject{|k,v| k[0] == '_' || k == 'instances'} || {}
+          item = v.reject{|key,val| key[0] == '_' || key == 'instances'} || {}
           item[:type] = transliterate(v._type).titleize
           self.relations << item
         end
