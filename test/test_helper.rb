@@ -8,7 +8,6 @@ if ENV['TRAVIS']
   Coveralls.wear!
 end
 
-require 'minitest/spec'
 require 'minitest/autorun'
 
 require 'open_calais'
