@@ -17,7 +17,7 @@ module OpenCalais
     DEFAULT_ADAPTER = :excon
 
     # The api endpoint to get REST info from opencalais
-    DEFAULT_ENDPOINT = 'https://api.thomsonreuters.com/permid/calais'.freeze
+    DEFAULT_ENDPOINT = 'https://api-eit.refinitiv.com/permid/calais'.freeze
 
     # The value sent in the http header for 'User-Agent' if none is set
     DEFAULT_USER_AGENT = "OpenCalais Ruby Gem #{OpenCalais::VERSION}".freeze
