@@ -4,15 +4,18 @@
 [![Build Status](https://travis-ci.org/PRX/open_calais.svg?branch=master)](https://travis-ci.org/PRX/open_calais)
 [![Code Climate](https://codeclimate.com/github/PRX/open_calais/badges/gpa.svg)](https://codeclimate.com/github/PRX/open_calais)
 [![Coverage Status](https://coveralls.io/repos/PRX/open_calais/badge.svg?branch=master)](https://coveralls.io/r/PRX/open_calais?branch=master)
-[![Dependency Status](https://gemnasium.com/PRX/open_calais.svg)](https://gemnasium.com/PRX/open_calais)
 
 _Gem Version 0.1.* supports the original OpenCalais API_
 
 _Gem Version 0.2.* now uses the upgraded API http://www.opencalais.com/_
 
-If you are upgrading the the new version of the API, you will need a new API key. You should also review the [upgrade guide](http://www.opencalais.com/opencalais-api/).
+_Gem Version 0.4.* supports refinitiv API_
 
-This is a ruby gem to access the [OpenCalais API](http://www.opencalais.com/opencalais-api/), using the REST API, and JSON responses.
+Open Calais is now found at: https://developers.refinitiv.com/open-permid/intelligent-tagging-restful-api
+
+It has a new default endpoint: https://api-eit.refinitiv.com/permid/calais
+
+This is a ruby gem to access the (formerly OpenCalais) [Refinitiv Intelligent Tagging API](https://developers.refinitiv.com/open-permid/intelligent-tagging-restful-api), using the REST API, and JSON responses.
 
 It uses [Faraday](https://github.com/lostisland/faraday) to abstract HTTP library (defaults to use excon because it is excellent), and multi_json to abstract JSON parsing.
 
@@ -34,7 +37,7 @@ Or install it yourself as:
 
 ## Usage
 
-OpenCalais has one main method, `enrich`, and so does the gem:
+Intelligent Tagging (OpenCalais) has one main method, `enrich`, and so does the gem:
 
 ```ruby
 require 'open_calais'
@@ -45,7 +48,7 @@ OpenCalais.configure do |c|
 end
 
 # or you can configure for a single call
-open_calais = OpenCalais::Client.new(:api_key=>'an api key')
+open_calais = OpenCalais::Client.new(:api_key => 'an api key')
 
 # it returns a OpenCalais::Response instance
 response = open_calais.enrich('Ruby on Rails is a fantastic web framework. It uses MVC, and the Ruby programming language invented by Matz in Japan.')
@@ -55,7 +58,7 @@ response.raw
 
 # and has been parsed a bit to get :language, :topics, :tags, :entities, :relations, :locations
 # as lists of hashes
-response.tags.each{|t| puts t[:name] }
+response.tags.each { |t| puts t[:name] }
 ```
 
 ## Contributing
