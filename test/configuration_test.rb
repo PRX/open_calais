@@ -8,7 +8,7 @@ describe OpenCalais::Configuration do
 
   it "can be configured" do
     TestConfig.configure do |c|
-      c.must_be_kind_of OpenCalais::Configuration
+      _(c).must_be_kind_of OpenCalais::Configuration
     end
   end
 end
