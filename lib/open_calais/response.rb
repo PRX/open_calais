@@ -5,10 +5,15 @@ require 'active_support'
 module OpenCalais
   class Response
 
+    ALLOWED_OPTIONS = [
+      :ignore_literal_match
+    ].freeze
+
     include ActiveSupport::Inflector
     attr_accessor :raw, :language, :topics, :tags, :entities, :relations, :locations
 
-    def initialize(response)
+    def initialize(response, options={})
+      @options = merge_default_options(options)
       @raw  = response
 
       @language = 'English'
@@ -18,7 +23,15 @@ module OpenCalais
       @relations = []
       @locations = []
 
-      parse(response)
+      parse(response, @options)
+    end
+
+    def merge_default_options(opts={})
+      defaults = {
+        :ignore_literal_match => true
+      }
+      options = defaults.merge(opts)
+      options.select{ |k,v| ALLOWED_OPTIONS.include? k.to_sym }
     end
 
     def humanize_topic(topic)
@@ -33,7 +46,7 @@ module OpenCalais
       end
     end
 
-    def parse(response)
+    def parse(response, options={})
       r = response.body
       @language = r.doc.meta.language rescue nil
       @language = nil if @language == 'InputTextTooShort'
@@ -52,9 +65,9 @@ module OpenCalais
             :score => importance_to_score(v.importance)
           }
         when 'entities'
-          parse_entity(k, v)
+          parse_entity(k, v, options)
         when 'relations'
-          parse_relation(k, v)
+          parse_relation(k, v, options)
         end
       end
 
@@ -63,7 +76,7 @@ module OpenCalais
       self.tags.delete_if { |tag| topic_names.include?(tag[:name]) }
     end
 
-    def parse_entity(k, v)
+    def parse_entity(k, v, options)
       if v.name.nil?
         v.name = v.instances.first[:exact]
       end
@@ -75,31 +88,33 @@ module OpenCalais
         :score => v.relevance
       }
 
-      instances = Array(v.instances).select { |i| i.exact.downcase != item[:name].downcase }
-      if instances && instances.size > 0
-        item[:matches] = instances
+      instances = Array(v.instances)
+      if options[:ignore_literal_match]
+        instances = instances.select { |i| i.exact.downcase != item[:name].downcase }
       end
+      item[:matches] = instances unless instances.empty?
 
       if OpenCalais::GEO_TYPES.include?(v._type)
-        self.locations << set_location_info(item, v)
+        item = set_location_info(item, v)
+        self.locations << item
       else
         self.entities << item
       end
     end
 
     def set_location_info(item, v)
-      if (v.resolutions && v.resolutions.size > 0)
-        r = v.resolutions.first
-        item[:name]      = r.shortname || r.name
-        item[:latitude]  = r.latitude
-        item[:longitude] = r.longitude
-        item[:country]   = r.containedbycountry if r.containedbycountry
-        item[:state]     = r.containedbystate if r.containedbystate
-      end
+      return item if v.resolutions.empty?
+
+      r = v.resolutions.first
+      item[:name]      = r.shortname || r.name
+      item[:latitude]  = r.latitude
+      item[:longitude] = r.longitude
+      item[:country]   = r.containedbycountry if r.containedbycountry
+      item[:state]     = r.containedbystate if r.containedbystate
       item
     end
 
-    def parse_relation(k, v)
+    def parse_relation(k, v, _options)
       item = v.reject { |key,val| key[0] == '_' || key == 'instances' } || {}
       item[:type] = transliterate(v._type).titleize
       self.relations << item

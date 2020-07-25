@@ -43,7 +43,7 @@ module OpenCalais
       response = connection(options).post do |request|
         request.body = text
       end
-      OpenCalais::Response.new(response)
+      OpenCalais::Response.new(response, options)
     end
 
     # using analyze as a standard method name
