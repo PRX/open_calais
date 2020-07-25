@@ -1,9 +1,14 @@
 # -*- encoding: utf-8 -*-
 
 require 'faraday_middleware'
+require 'hashie'
 
 module OpenCalais
   module Connection
+
+    class HashieWrapper < ::Hashie::Mash
+      disable_warnings
+    end
 
     ALLOWED_OPTIONS = [
       :headers,
@@ -37,6 +42,7 @@ module OpenCalais
 
     def connection(options={})
       opts = merge_default_options(options)
+      FaradayMiddleware::Mashify.mash_class = HashieWrapper
       Faraday::Connection.new(opts) do |connection|
         connection.request  :url_encoded
         connection.response :mashify
