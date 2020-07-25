@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 
-require 'simplecov'
-SimpleCov.start
-
 if ENV['TRAVIS']
   require 'coveralls'
   Coveralls.wear!
+else
+  require 'simplecov'
+  SimpleCov.start
 end
 
 require 'minitest/autorun'
