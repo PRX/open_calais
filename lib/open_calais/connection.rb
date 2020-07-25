@@ -47,9 +47,10 @@ module OpenCalais
         connection.request  :url_encoded
         connection.response :mashify
         connection.response :logger if ENV['DEBUG']
+        connection.response :raise_error
 
         if opts[:headers][OpenCalais::HEADERS[:output_format]] == OpenCalais::OUTPUT_FORMATS[:json]
-          connection.response :json
+          connection.response :json, :content_type => /\bjson$/
         else
           connection.response :xml
         end
