@@ -103,7 +103,7 @@ module OpenCalais
     end
 
     def set_location_info(item, v)
-      return item if v.resolutions.empty?
+      return item if v.resolutions.nil? || v.resolutions.empty?
 
       r = v.resolutions.first
       item[:name]      = r.shortname || r.name
